@@ -11,7 +11,7 @@ RSpec.describe Offset do
     it 'has readable attributes' do
       offset = Offset.new('today')
 
-      expect(offset.date_as_number).to eq(130621)
+      expect(offset.date_as_number).to eq(140621)
 
       offset = Offset.new('040895')
 

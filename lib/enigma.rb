@@ -1,9 +1,13 @@
 class Enigma
   attr_reader :character_set,
-              :shift_array
+              :shift_array,
+              :date_as_string,
+              :key_as_string
 
   def initialize
-    @shift_array = [],
+    @key_as_string = key_as_string
+    @date_as_string = date_as_string
+    @shift_array = []
     @character_set = ("a".."z").to_a << " "
   end
 
@@ -16,10 +20,10 @@ class Enigma
       new_character = find_new_character(element, rotation)
       encryption << new_character
     end
-    encryption_hash = {encryption: encryption.join, key: key, date: date}
+    encryption_hash = {encryption: encryption.join, key: @key_as_string, date: @date_as_string}
   end
 
-  def decrypt(message, key = 'random', date = 'today')
+  def decrypt(message, key, date = 'today')
     encryption = []
     calculate_shift(key, date)
     message_array = message.chars
@@ -28,14 +32,16 @@ class Enigma
       new_character = find_new_character(element, - rotation)
       encryption << new_character
     end
-    encryption_hash = {encryption: encryption.join, key: key, date: date}
+    encryption_hash = {encryption: encryption.join, key: @key_as_string, date: @date_as_string}
   end
 
   def calculate_shift(key, date)
     shift = []
     enigma_key = Key.new(key)
+    @key_as_string = enigma_key.enigma_key
     key_array = enigma_key.create_A_B_C_D_keys
     enigma_offset = Offset.new(date)
+    @date_as_string = enigma_offset.date_as_number.to_s.rjust(6, "0")
     offset_array = enigma_offset.create_A_B_C_D_offset
     shift << key_array << offset_array
     @shift_array = shift.transpose.map do |arr|
@@ -58,8 +64,12 @@ class Enigma
   end
 
   def find_new_character(element, rotation)
-    original_index = @character_set.index(element)
-    rotated_array = @character_set.rotate(rotation)
-    rotated_array[original_index]
+    if @character_set.include?(element) == false
+      return element
+    else
+      original_index = @character_set.index(element)
+      rotated_array = @character_set.rotate(rotation)
+      rotated_array[original_index]
+    end
   end
 end

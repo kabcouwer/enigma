@@ -19,6 +19,18 @@ class Enigma
     encryption_hash = {encryption: encryption.join, key: key, date: date}
   end
 
+  def decrypt(message, key = 'random', date = 'today')
+    encryption = []
+    calculate_shift(key, date)
+    message_array = message.chars
+    message_array.each_with_index do |element, index|
+      rotation = find_rotation(index)
+      new_character = find_new_character(element, - rotation)
+      encryption << new_character
+    end
+    encryption_hash = {encryption: encryption.join, key: key, date: date}
+  end
+
   def calculate_shift(key, date)
     shift = []
     enigma_key = Key.new(key)
@@ -50,7 +62,4 @@ class Enigma
     rotated_array = @character_set.rotate(rotation)
     rotated_array[original_index]
   end
-
-
-
 end

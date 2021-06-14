@@ -59,7 +59,7 @@ RSpec.describe Enigma do
       })
     end
 
-    xit 'can dencrypt a message with a key and date' do
+    it 'can dencrypt a message with a key and date' do
       expect(@enigma.decrypt("keder ohulw", "02715", "040895")).to eq({
         encryption: "hello world",
         key: "02715",

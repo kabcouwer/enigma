@@ -50,6 +50,8 @@ RSpec.describe Enigma do
       expect(@enigma.find_new_character('r', 3)).to eq('u')
       expect(@enigma.find_new_character('l', 27)).to eq('l')
       expect(@enigma.find_new_character('d', 73)).to eq('w')
+      expect(@enigma.find_new_character('@', 20)).to eq('@')
+      expect(@enigma.find_new_character('2', 3)).to eq('2')
     end
 
     it 'can encrypt a message with a key and date' do

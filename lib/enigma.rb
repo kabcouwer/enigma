@@ -1,11 +1,13 @@
 class Enigma
   attr_reader :character_set,
               :shift_array,
-              :date_as_string
+              :date_as_string,
+              :key_as_string
 
   def initialize
+    @key_as_string = key_as_string
     @date_as_string = date_as_string
-    @shift_array = [],
+    @shift_array = []
     @character_set = ("a".."z").to_a << " "
   end
 
@@ -18,7 +20,7 @@ class Enigma
       new_character = find_new_character(element, rotation)
       encryption << new_character
     end
-    encryption_hash = {encryption: encryption.join, key: key, date: @date_as_string}
+    encryption_hash = {encryption: encryption.join, key: @key_as_string, date: @date_as_string}
   end
 
   def decrypt(message, key, date = 'today')
@@ -30,12 +32,13 @@ class Enigma
       new_character = find_new_character(element, - rotation)
       encryption << new_character
     end
-    encryption_hash = {encryption: encryption.join, key: key, date: @date_as_string}
+    encryption_hash = {encryption: encryption.join, key: @key_as_string, date: @date_as_string}
   end
 
   def calculate_shift(key, date)
     shift = []
     enigma_key = Key.new(key)
+    @key_as_string = enigma_key.enigma_key
     key_array = enigma_key.create_A_B_C_D_keys
     enigma_offset = Offset.new(date)
     @date_as_string = enigma_offset.date_as_number.to_s.rjust(6, "0")

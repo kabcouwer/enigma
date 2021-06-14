@@ -22,8 +22,8 @@ class Offset
 
   def create_A_B_C_D_offset
     square = (@date_as_number ** 2).to_s
-    array = square.chars.last(4)
-    offset = array.map do |num|
+    num_array = square.chars.last(4)
+    offset = num_array.map do |num|
       num.to_i
     end
   end

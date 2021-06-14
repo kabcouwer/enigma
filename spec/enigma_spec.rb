@@ -37,7 +37,21 @@ RSpec.describe Enigma do
       expect(@enigma.find_rotation(11)).to eq(20)
     end
 
-    xit 'can encrypt a message with a key and date' do
+    it 'can find the new character depending on the rotation' do
+      expect(@enigma.find_new_character('h', 3)).to eq('k')
+      expect(@enigma.find_new_character('e', 27)).to eq('e')
+      expect(@enigma.find_new_character('l', 73)).to eq('d')
+      expect(@enigma.find_new_character('l', 20)).to eq('e')
+      expect(@enigma.find_new_character('o', 3)).to eq('r')
+      expect(@enigma.find_new_character(' ', 27)).to eq(' ')
+      expect(@enigma.find_new_character('w', 73)).to eq('o')
+      expect(@enigma.find_new_character('o', 20)).to eq('h')
+      expect(@enigma.find_new_character('r', 3)).to eq('u')
+      expect(@enigma.find_new_character('l', 27)).to eq('l')
+      expect(@enigma.find_new_character('d', 73)).to eq('w')
+    end
+
+    it 'can encrypt a message with a key and date' do
       expect(@enigma.encrypt("hello world", "02715", "040895")).to eq({
         encryption: "keder ohulw",
         key: "02715",

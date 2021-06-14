@@ -7,17 +7,11 @@ class Enigma
     @character_set = ("a".."z").to_a << " "
   end
 
-
-  # def encrypt(message, key = 'random', date = 'today')
-  #   encryption = []
-  #   shift = calculate_shift(key, date)
-  #   message_array = message.chars
-  #   message_array.map do |letter|
-  #     i = character_set.find_index(letter)
-  #     new_letter = character_set[i + 1]
-  #     encryption << new_letter
-  #   end
-  # end
+  def encrypt(message, key = 'random', date = 'today')
+    encryption = []
+    calculate_shift(key, date)
+    message_array = message.chars
+  end
 
   def calculate_shift(key, date)
     shift = []
@@ -43,6 +37,12 @@ class Enigma
     elsif index == 3 || index % 4 == 3
       @shift_array[3]
     end
+  end
+
+  def find_new_character(element, rotation)
+    original_index = @character_set.index(element)
+    rotated_array = @character_set.rotate(rotation)
+    rotated_array[original_index]
   end
 
 

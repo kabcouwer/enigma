@@ -24,15 +24,15 @@ class Enigma
   end
 
   def decrypt(message, key, date = 'today')
-    encryption = []
+    decryption = []
     calculate_shift(key, date)
     message_array = message.chars
     message_array.each_with_index do |element, index|
       rotation = find_rotation(index)
       new_character = find_new_character(element, - rotation)
-      encryption << new_character
+      decryption << new_character
     end
-    encryption_hash = {encryption: encryption.join, key: @key, date: @date}
+    decryption_hash = {decryption: decryption.join, key: @key, date: @date}
   end
 
   def calculate_shift(key, date)
@@ -52,13 +52,13 @@ class Enigma
   end
 
   def find_rotation(index)
-    if index == 0 || index % 4 == 0
+    if index % 4 == 0
       @shift_array[0]
-    elsif index == 1 || index % 4 == 1
+    elsif index % 4 == 1
       @shift_array[1]
-    elsif index == 2 || index % 4 == 2
+    elsif index % 4 == 2
       @shift_array[2]
-    elsif index == 3 || index % 4 == 3
+    elsif index % 4 == 3
       @shift_array[3]
     end
   end
